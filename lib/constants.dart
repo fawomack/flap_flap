@@ -1,6 +1,5 @@
-/// This file acts as the "Control Panel" for your game.
-/// Use these classes to adjust gameplay, UI, and asset paths.
-library constants; // <--- Add this line
+// This file acts as the "Control Panel" for your game. //
+// Use these classes to adjust gameplay, UI, and asset paths.
 
 class GameConfig {
   // Physics - The "unforgiving" factors
