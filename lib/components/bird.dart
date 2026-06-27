@@ -25,4 +25,12 @@ class BirdComponent extends PositionComponent {
     // 2. Update our position based on that logic
     position.y = logic.yPosition;
   }
+
+  /// Triggers the jump action by communicating with the logic layer.
+  /// This method is called by the GameScreen when a user tap is detected.
+  void jump() {
+    // We delegate the actual math/physics calculation to our logic class.
+    // This keeps the component (visuals) separate from the logic (math).
+    logic.jump();
+  }
 }

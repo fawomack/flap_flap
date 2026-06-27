@@ -1,10 +1,19 @@
 import 'package:flame/game.dart';
-import '../components/bird.dart'; // We will create this next
+import '../components/bird.dart'; 
+import 'package:flame/events.dart'; // <--- This contains TapCallbacks
 
-class GameScreen extends FlameGame {
+class GameScreen extends FlameGame with TapCallbacks {
+  late BirdComponent bird;
+  
   @override
   Future<void> onLoad() async {
-    // This is where we will add our bird component
-    add(BirdComponent());
+    bird = BirdComponent();
+    add(bird);
+  }
+
+  @override
+  void onTapDown(TapDownEvent event) {
+    super.onTapDown(event); // Always call super for overrides
+    bird.jump();
   }
 }
