@@ -3,8 +3,8 @@
 
 class GameConfig {
   // Physics - The "unforgiving" factors
-  static const double gravity = 9.8;
-  static const double jumpStrength = 5.0;
+  static const double gravity = 500;
+  static const double jumpStrength = -250;
   static const double pipeSpeed = 2.0;
 
   // Spawning
