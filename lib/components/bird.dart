@@ -3,14 +3,16 @@ import 'package:flutter/material.dart';
 import '../logic/bird_logic.dart';
 import '../screens/game_screen.dart';
 import '../constants.dart';
+import 'package:flame/collisions.dart'; // Import this for collissions
 
-class BirdComponent extends PositionComponent with HasGameReference<GameScreen> {
+class BirdComponent extends PositionComponent with HasGameReference<GameScreen>, CollisionCallbacks {
   // We hold the logic "brain" here
   final BirdLogic logic = BirdLogic();
 
   @override
   Future<void> onLoad() async {
     size = Vector2(GameConfig.birdSize, GameConfig.birdSize); // Give it a size
+    add(RectangleHitbox());// Add a circular or rectangular hitbox to the bird
     reset();
   }
 
@@ -21,6 +23,14 @@ class BirdComponent extends PositionComponent with HasGameReference<GameScreen> 
     //position = Vector2(GameConfig.initialBirdX, GameConfig.initialBirdY);//was originally hardcoded, now uses screen size dynamically
     logic.reset(startY: spawnY);
     position = Vector2(spawnX, spawnY);
+  }
+
+  // Handle collision events
+  @override
+  void onCollisionStart(Set<Vector2> intersectionPoints, PositionComponent other) {
+    super.onCollisionStart(intersectionPoints, other);
+    // If we hit anything, kill the bird!
+    logic.isDead = true;
   }
 
   @override

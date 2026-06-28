@@ -5,8 +5,9 @@ import 'package:flame/events.dart'; // <--- This contains TapCallbacks
 //import 'package:flutter/material.dart'; // Standard Flutter UI
 import 'package:flutter/foundation.dart'; // This is where debugPrint lives
 import '../constants.dart';
+import '../components/boundary.dart';
 
-class GameScreen extends FlameGame with TapCallbacks {
+class GameScreen extends FlameGame with TapCallbacks, HasCollisionDetection {
   late BirdComponent bird;
   
   // Declare the initial game state
@@ -14,8 +15,21 @@ class GameScreen extends FlameGame with TapCallbacks {
 
   @override
   Future<void> onLoad() async {
+    // add bird
     bird = BirdComponent();
     add(bird);
+
+    // 2. Add Floor (at the bottom of the screen)
+    add(Boundary(
+      size: Vector2(size.x, 20), // 20 pixels thick
+      position: Vector2(0, size.y - 20),
+    ));
+
+    // 3. Add Ceiling (at the top of the screen)
+    add(Boundary(
+      size: Vector2(size.x, 20),
+      position: Vector2(0, 0),
+    ));
 
     // Setup and add the overlays (UI)
     // Overlays will be described later in this process.
