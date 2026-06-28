@@ -6,6 +6,7 @@ import 'package:flame/events.dart'; // <--- This contains TapCallbacks
 import 'package:flutter/foundation.dart'; // This is where debugPrint lives
 import '../constants.dart';
 import '../components/boundary.dart';
+import '../logic/obstacle_logic.dart';
 
 class GameScreen extends FlameGame with TapCallbacks, HasCollisionDetection {
   late BirdComponent bird;
@@ -30,6 +31,8 @@ class GameScreen extends FlameGame with TapCallbacks, HasCollisionDetection {
       size: Vector2(size.x, 20),
       position: Vector2(0, 0),
     ));
+
+    add(PipeManager());
 
     // Setup and add the overlays (UI)
     // Overlays will be described later in this process.
