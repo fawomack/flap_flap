@@ -2,13 +2,13 @@
 import '../constants.dart';
 
 class BirdLogic {
-  double yPosition = 100.0;// initial position
+  double yPosition = GameConfig.initialBirdY;// initial position
   double velocity = 0.0;  // Initial velocity (how fast it's falling)
   bool isDead = false; // Add a state to track if the bird hit something
 
-  void reset() {
-    // Now it uses the same constants as the initial setup
-    yPosition = GameConfig.initialBirdY; 
+  void reset({double? startY}) {
+    // If startY is provided, use it; otherwise, use the constant
+    yPosition = startY ?? GameConfig.initialBirdY;
     velocity = 0.0;
     isDead = false;
   }

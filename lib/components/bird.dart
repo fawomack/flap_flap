@@ -15,8 +15,11 @@ class BirdComponent extends PositionComponent with HasGameReference<GameScreen> 
   }
 
   void reset() {
-    position = Vector2(GameConfig.initialBirdX, GameConfig.initialBirdY);
-    logic.reset();
+    double spawnX = game.size.x * 0.2;// Spawn at 20% of the screen width
+    double spawnY = (game.size.y / 2) - (GameConfig.birdSize / 2);//center vertically
+    //position = Vector2(GameConfig.initialBirdX, GameConfig.initialBirdY);//was originally hardcoded, now uses screen size dynamically
+    logic.reset(startY: spawnY);
+    position = Vector2(spawnX, spawnY);
   }
 
   @override
