@@ -1,11 +1,18 @@
 // This file acts as the "Control Panel" for your game. //
 // Use these classes to adjust gameplay, UI, and asset paths.
 
+enum GameState { initial, playing, gameOver }
+
 class GameConfig {
   // Physics - The "unforgiving" factors
   static const double gravity = 500;
   static const double jumpStrength = -250;
   static const double pipeSpeed = 2.0;
+  static const double birdSize = 50.0; 
+
+  // Define initial position here
+  static const double initialBirdX = 100.0;
+  static const double initialBirdY = 100.0;
 
   // Spawning
   static const double pipeSpawnInterval = 1.5; // seconds

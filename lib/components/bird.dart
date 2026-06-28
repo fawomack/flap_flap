@@ -1,15 +1,22 @@
 import 'package:flame/components.dart';
 import 'package:flutter/material.dart';
 import '../logic/bird_logic.dart';
+import '../screens/game_screen.dart';
+import '../constants.dart';
 
-class BirdComponent extends PositionComponent {
+class BirdComponent extends PositionComponent with HasGameReference<GameScreen> {
   // We hold the logic "brain" here
   final BirdLogic logic = BirdLogic();
 
   @override
   Future<void> onLoad() async {
-    size = Vector2(50, 50); // Give it a size
-    position = Vector2(100, 100);
+    size = Vector2(GameConfig.birdSize, GameConfig.birdSize); // Give it a size
+    reset();
+  }
+
+  void reset() {
+    position = Vector2(GameConfig.initialBirdX, GameConfig.initialBirdY);
+    logic.reset();
   }
 
   @override
@@ -20,10 +27,10 @@ class BirdComponent extends PositionComponent {
 
   @override
   void update(double dt) {
-    // 1. Tell logic to calculate physics
-    logic.update(dt);
-    // 2. Update our position based on that logic
-    position.y = logic.yPosition;
+    if (game.gameState == GameState.playing) {// CRITICAL: Only update logic if the game is in the 'playing' state
+      logic.update(dt, game.size.y);//Tell logic to calculate physics & game screen height
+      position.y = logic.yPosition; // Update our position based on that logic
+    }
   }
 
   /// Triggers the jump action by communicating with the logic layer.
