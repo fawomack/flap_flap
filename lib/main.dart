@@ -36,6 +36,9 @@ class FlapFlapApp extends StatelessWidget {
               // For now, let's just pass false for 'Start'
               return MenuScreen(game: game as GameScreen, isGameOver: false);
             },
+            'GameOver': (context, game) {
+              return MenuScreen(game: game as GameScreen, isGameOver: true);
+            }
           },
         initialActiveOverlays: const ['Menu'], // Show the menu when the app launches
         ),
