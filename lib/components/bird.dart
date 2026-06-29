@@ -43,7 +43,7 @@ class BirdComponent extends PositionComponent with HasGameReference<GameScreen>,
     if (other is Boundary || other is Pipe) {
       logic.isDead = true;
       game.pauseEngine(); // This stops everything (pipes, gravity, movement)
-      game.overlays.add('GameOver'); // This shows your UI
+      game.overlays.add('Menu'); // This shows your UI
     }
   }
 

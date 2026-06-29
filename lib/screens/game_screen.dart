@@ -36,7 +36,7 @@ class GameScreen extends FlameGame with TapCallbacks, HasCollisionDetection {
 
     add(PipeManager());
 
-    overlays.add('GameOver');
+    overlays.add('Menu');
 
     // Setup and add the overlays (UI)
     // Overlays will be described later in this process.
@@ -74,12 +74,17 @@ class GameScreen extends FlameGame with TapCallbacks, HasCollisionDetection {
 
   void startGame() {
     gameState = GameState.playing;
+    overlays.remove('Menu'); // Ensure the menu is GONE
+    resumeEngine();
     // Activate any moving components (Pipes, when you add them)
     // overlays.remove('initial'); 
   }
 
   void triggerGameOver() {
+    if (gameState == GameState.gameOver) return; // Guard clause: already dead!
     gameState = GameState.gameOver;
+    pauseEngine(); // This stops the game logic entirely
+    overlays.add('Menu');
     // Deactivate moving components (Pipes, when you add them)
     // overlays.add('gameOver'); // Show the visual overlay
     

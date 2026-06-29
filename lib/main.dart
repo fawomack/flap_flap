@@ -3,6 +3,7 @@ import 'package:flutter/services.dart'; // Import this for SystemChrome
 import 'package:flutter/material.dart';
 import 'screens/game_screen.dart';
 import 'screens/menu_screen.dart'; // Make sure this path matches where your file is located
+import 'constants.dart';
 
 void main() async{
   // Initialize the Flutter widgets
@@ -32,13 +33,17 @@ class FlapFlapApp extends StatelessWidget {
           game: GameScreen(),
           overlayBuilderMap: {
             'Menu': (context, game) {
+              final gameScreen = game as GameScreen;
               // You can decide if it's Game Over or Start based on game state
               // For now, let's just pass false for 'Start'
-              return MenuScreen(game: game as GameScreen, isGameOver: false);
+              return MenuScreen(
+                game: gameScreen, 
+                isGameOver: gameScreen.gameState == GameState.gameOver
+              );
             },
-            'GameOver': (context, game) {
+            /*'GameOver': (context, game) {
               return MenuScreen(game: game as GameScreen, isGameOver: true);
-            }
+            }*/
           },
         initialActiveOverlays: const ['Menu'], // Show the menu when the app launches
         ),

@@ -2,6 +2,7 @@ import 'dart:math';
 import 'package:flame/components.dart';
 import '../components/obstacle_pipe.dart';
 import '../screens/game_screen.dart';
+import '../constants.dart';
 
 class PipeManager extends Component with HasGameReference<GameScreen> {
   double timer = 0;
@@ -9,6 +10,8 @@ class PipeManager extends Component with HasGameReference<GameScreen> {
 
   @override
   void update(double dt) {
+    // If the game isn't playing, do not update movement!
+    if (game.gameState != GameState.playing) return;
     timer += dt;
     if (timer >= spawnInterval) {
       spawnPipes();

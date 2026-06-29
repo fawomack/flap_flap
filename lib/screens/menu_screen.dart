@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../screens/game_screen.dart';
+import '../constants.dart';
 
 class MenuScreen extends StatelessWidget {
   final GameScreen game;
@@ -29,9 +30,13 @@ class MenuScreen extends StatelessWidget {
             const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
+                if (isGameOver) {
+                  game.resetGame();
+                }
                 // Remove the menu overlay
                 game.overlays.remove('Menu');
                 // Resume the game
+                game.gameState = GameState.playing;
                 game.resumeEngine();
                 // If it was game over, we would call a reset() method here
               },
