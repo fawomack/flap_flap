@@ -14,6 +14,7 @@ class BirdLogic {
   }
 
   // This method will be called every frame
+  /* -- OLD initial version of update and collission logic. now splitting out update and collission
   void update(double dt, double screenHeight) {
     if (isDead) return;
 
@@ -34,8 +35,17 @@ class BirdLogic {
       isDead = true;
     }
   }
+  */
 
-  void jump() {
+  void update(double dt, double screenHeight) {
+    if (isDead) return;
+
+    //apply gravity and update position
+    velocity += GameConfig.gravity * dt;    // 1. Apply simple gravity: increase velocity over time
+    yPosition += velocity * dt;    // 2. Update position based on velocity
+  }
+
+    void jump() {
     if (!isDead) { //can't jump if dead
       velocity = GameConfig.jumpStrength;    // Negative velocity moves the bird up
     }

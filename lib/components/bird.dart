@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import '../logic/bird_logic.dart';
 import '../screens/game_screen.dart';
 import '../constants.dart';
+import 'boundary.dart';
+import 'obstacle_pipe.dart';
 import 'package:flame/collisions.dart'; // Import this for collissions
 
 class BirdComponent extends PositionComponent with HasGameReference<GameScreen>, CollisionCallbacks {
@@ -26,11 +28,21 @@ class BirdComponent extends PositionComponent with HasGameReference<GameScreen>,
   }
 
   // Handle collision events
-  @override
+  /*@override --old collision logic only handling boundaries, now we handle combination of whatevery we want
   void onCollisionStart(Set<Vector2> intersectionPoints, PositionComponent other) {
     super.onCollisionStart(intersectionPoints, other);
     // If we hit anything, kill the bird!
     logic.isDead = true;
+  }*/
+
+  @override
+  void onCollisionStart(Set<Vector2> intersectionPoints, PositionComponent other) {
+    super.onCollisionStart(intersectionPoints, other);
+    
+    // The "Body" asks the "Brain" to update its state
+    if (other is Boundary || other is Pipe) {
+      logic.isDead = true;
+    }
   }
 
   @override
