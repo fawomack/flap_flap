@@ -27,8 +27,8 @@ class BirdComponent extends PositionComponent with HasGameReference<GameScreen>,
     position = Vector2(spawnX, spawnY);
   }
 
-  // Handle collision events
-  /*@override --old collision logic only handling boundaries, now we handle combination of whatevery we want
+  // Handle collision events--old collision logic only handling boundaries, now we handle combination of whatevery we want
+  /*@override 
   void onCollisionStart(Set<Vector2> intersectionPoints, PositionComponent other) {
     super.onCollisionStart(intersectionPoints, other);
     // If we hit anything, kill the bird!
@@ -42,6 +42,8 @@ class BirdComponent extends PositionComponent with HasGameReference<GameScreen>,
     // The "Body" asks the "Brain" to update its state
     if (other is Boundary || other is Pipe) {
       logic.isDead = true;
+      game.pauseEngine(); // This stops everything (pipes, gravity, movement)
+      game.overlays.add('GameOver'); // This shows your UI
     }
   }
 

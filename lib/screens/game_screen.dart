@@ -7,9 +7,11 @@ import 'package:flutter/foundation.dart'; // This is where debugPrint lives
 import '../constants.dart';
 import '../components/boundary.dart';
 import '../logic/obstacle_logic.dart';
+import '../components/obstacle_pipe.dart';
 
 class GameScreen extends FlameGame with TapCallbacks, HasCollisionDetection {
   late BirdComponent bird;
+  int score = 0;
   
   // Declare the initial game state
   GameState gameState = GameState.initial;
@@ -33,6 +35,8 @@ class GameScreen extends FlameGame with TapCallbacks, HasCollisionDetection {
     ));
 
     add(PipeManager());
+
+    overlays.add('GameOver');
 
     // Setup and add the overlays (UI)
     // Overlays will be described later in this process.
@@ -83,10 +87,23 @@ class GameScreen extends FlameGame with TapCallbacks, HasCollisionDetection {
   }
 
   void resetGame() {
+    // 1. Reset Game State
     gameState = GameState.initial;
-    bird.reset(); // Call the component's reset method
-    // overlays.remove('gameOver');
-    
-    debugPrint('Game Reset. Ready to start again.');
-  }
+  
+    // 2. Reset Bird
+    bird.reset(); 
+  
+    // 3. Clear the World (The critical step for "Zombie" avoidance)
+    // This removes all Pipes currently in the game
+    children.whereType<Pipe>().forEach((pipe) => pipe.removeFromParent());
+  
+    // 4. Reset Score
+    score = 0;
+  
+    // 5. Restart the Engine 
+    // (In case it was paused during a Game Over)
+    resumeEngine();
+  
+    debugPrint('Game fully reset. Ready to start again.');
+}
 }
